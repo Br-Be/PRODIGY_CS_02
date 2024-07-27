@@ -1,0 +1,30 @@
+from PIL import Image
+import numpy as np
+
+def Encrypt_image(image_path, key):
+    pic = Image.open(image_path)
+    pic = pic.convert('RGB')
+    pixels = np.array(pic)
+
+    key = key % 256
+    encrypted_pixels = pixels ^ key
+
+    encrypted_pic = Image.fromarray(encrypted_pixels.astype(np.uint8))
+    encrypted_pic.save('Encrypted_picture.png')
+    print("Image encrypted and saved as 'Encrypted_picture.png'")
+
+def Decrypt_image(image_path, key):
+    pic = Image.open(image_path)
+    pic = pic.convert('RGB')
+    pixels = np.array(pic)
+
+    key = key % 256
+    decrypted_pixels = pixels ^ key
+
+    decrypted_pic = Image.fromarray(decrypted_pixels.astype(np.uint8))
+    decrypted_pic.save('Decrypted_picture.png')
+    print("Image decrypted and saved as 'Decrypted_picture.png'")
+
+key = 123 
+Encrypt_image("C:\\Users\\VIKAS B\\Pictures\\1776412.jpg", key)
+Decrypt_image("C:\\Users\\VIKAS B\\Documents\\IDT\\Encrypted_picture.png", key)
